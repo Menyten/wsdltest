@@ -1,0 +1,33 @@
+plugins {
+    id 'groovy'
+    id 'com.yupzip.wsdl2java' version "$wsdl2java_version"
+}
+
+group = 'com.test'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.groovy:groovy:4.0.14'
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+wsdl2java {
+    wsdlsToGenerate = [
+            [
+                    '-p', 'generated.com.test.microservice.test.resources.models.listing.getlistinginteraction',
+                    '-wsdlLocation', 'classpath:wsdl/GetListingInteraction_1.0_rivtabp20.wsdl', "$projectDir/src/main/resources/wsdl/GetListingInteraction_1.0_rivtabp20.wsdl",
+            ],
+    ]
+    wsdlDir = file("$projectDir/src/main/resources/wsdl")
+    cxfVersion = "3.5.5"
+    cxfPluginVersion = "3.5.5"
+}
